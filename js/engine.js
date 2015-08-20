@@ -94,7 +94,25 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
+        collisionCheck();
         player.update();
+    }
+
+    function distance(px,py,ex,ey){
+        return Math.sqrt((Math.pow(px - ex, 2)+Math.pow(py - ey,2)));
+    }
+
+    function collisionCheck(){
+        allEnemies.forEach(function(enemy) {
+           if (distance(player.x,player.y,enemy.x,enemy.y) < 78){
+                player.x = 315;
+                player.y = 471;
+                return true;
+           } else {
+                return false;
+
+           }
+        });
     }
 
     /* This function initially draws the "game level", it will then call
@@ -174,7 +192,7 @@ var Engine = (function(global) {
         'images/grass-block.png',
         'images/enemy-bug1.png',
         'images/enemy-bug-left1.png',
-        'images/char-horn-girl.png'
+        'images/char-horn-girl1.png'
     ]);
     Resources.onReady(init);
 
