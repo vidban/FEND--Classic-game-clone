@@ -94,14 +94,18 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
-        collisionCheck();
+        collisionCheck();       // check for collisions between bugs and player
         player.update();
     }
-
+    
+    // function to calculate distance between two objects
+    // takes in x and y position of both objects as arguments
     function distance(px,py,ex,ey){
         return Math.sqrt((Math.pow(px - ex, 2)+Math.pow(py - ey,2)));
     }
 
+    // function to check for collision between player and bug
+    // returns true if collision is there and false if not.
     function collisionCheck(){
         allEnemies.forEach(function(enemy) {
            if (distance(player.x,player.y,enemy.x,enemy.y) < 78){
