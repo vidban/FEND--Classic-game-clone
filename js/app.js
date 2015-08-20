@@ -67,26 +67,27 @@ Player.prototype.handleInput = function(keycode){
     switch(keycode){
         case "up":
             this.y -= 82;
-            if (this.y < 0){
-                this.y = 0;
+            if (this.y < 60){
+                this.y = 61;
             }
             break;
         case "down":
             this.y += 82;
-            if (this.y >=canvas_height-160){
-                this.y -= 80;
+            console.log(this.y);
+            if (this.y > 553){
+                this.y = 553;
             }
             break;
         case "left":
             this.x -= 75;
-            if (this.x < 0){
-                this.x = 0;
+            if (this.x < 15){
+                this.x = 15;
             }
             break;
         case "right":
             this.x += 75;
-            if (this.x >=canvas_width-100){
-                this.x -= 100;
+            if (this.x > 615){
+                this.x = 615;
             }
             break;
     }
