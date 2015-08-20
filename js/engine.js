@@ -25,13 +25,13 @@ var Engine = (function(global) {
         ctx = canvas.getContext('2d'),
         lastTime;
 
-    canvas.width = 505;
-    canvas.height = 606;
+    canvas.width = 705;
+    canvas.height = 706;
     doc.body.appendChild(canvas);
 
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
-     */
+     */080808
     function main() {
         /* Get our time delta information which is required if your game
          * requires smooth animation. Because everyone's computer processes
@@ -109,14 +109,15 @@ var Engine = (function(global) {
          */
         var rowImages = [
                 'images/water-block.png',   // Top row is water
-                'images/stone-block.png',   // Row 1 of 3 of stone
-                'images/stone-block.png',   // Row 2 of 3 of stone
-                'images/stone-block.png',   // Row 3 of 3 of stone
+                'images/stone-block.png',   // Row 1 of 4 of stone
+                'images/stone-block.png',   // Row 2 of 4 of stone
+                'images/stone-block.png',   // Row 3 of 4 of stone
+                'images/stone-block.png',   // Row 4 of 4 of stone                
                 'images/grass-block.png',   // Row 1 of 2 of grass
                 'images/grass-block.png'    // Row 2 of 2 of grass
             ],
-            numRows = 6,
-            numCols = 5,
+            numRows = 7,
+            numCols = 8,
             row, col;
 
         /* Loop through the number of rows and columns we've defined above
@@ -130,7 +131,7 @@ var Engine = (function(global) {
                  * to start drawing and the y coordinate to start drawing.
                  * We're using our Resources helpers to refer to our images
                  * so that we get the benefits of caching these images, since
-                 * we're using them over and over.
+                 * we're using the08m over and over.
                  */
                 ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
             }
@@ -171,8 +172,9 @@ var Engine = (function(global) {
         'images/stone-block.png',
         'images/water-block.png',
         'images/grass-block.png',
-        'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/enemy-bug1.png',
+        'images/enemy-bug-left1.png',
+        'images/char-horn-girl.png'
     ]);
     Resources.onReady(init);
 
