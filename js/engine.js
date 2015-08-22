@@ -117,7 +117,7 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
            if (distance(player.x,player.y,enemy.x,enemy.y) < 78){
                 player.x = 315;
-                player.y = 471;
+                player.y = 553;
                 lives -= 1;
                 return true;
            } else {
@@ -160,6 +160,7 @@ var Engine = (function(global) {
          */
         var rowImages = [
                 'images/water-block.png',   // Top row is water
+                'images/grass-block.png',   // Second row is water
                 'images/stone-block.png',   // Row 1 of 4 of stone
                 'images/stone-block.png',   // Row 2 of 4 of stone
                 'images/stone-block.png',   // Row 3 of 4 of stone
@@ -167,7 +168,7 @@ var Engine = (function(global) {
                 'images/grass-block.png',   // Row 1 of 2 of grass
                 'images/grass-block.png'    // Row 2 of 2 of grass
             ],
-            numRows = 7,
+            numRows = 8,
             numCols = 8,
             row, col;
 

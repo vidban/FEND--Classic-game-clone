@@ -68,14 +68,14 @@ Player.prototype.handleInput = function(keycode){
     switch(keycode){
         case "up":
             this.y -= 82;
-            if (this.y < 60){       // if player reaches top edge of canvas
-                this.y = 61;        // it does not move more up, off canvas
+            if (this.y < 142){       // if player reaches top edge of canvas
+                this.y = 142;        // it does not move more up, off canvas
             }
             break;
         case "down":
             this.y += 82;
-            if (this.y > 553){      // if player reaches bottom edge of canvas
-                this.y = 553;       // it does not move more down, off canvas
+            if (this.y > 637){      // if player reaches bottom edge of canvas
+                this.y = 637;       // it does not move more down, off canvas
             }   
             break;
         case "left":
@@ -139,19 +139,19 @@ function instantiateEnemy(){
     // assign number of bugs and their speed for each lane
     for (var lane = 1; lane<5; lane++){
        if (lane == 1){              // if first lane
-            y = 145;                // assigns y position of bug
+            y = 227;                // assigns y position of bug
             num = 3;                // the number of bugs
             speed = 100;            // the bugs' speed
         } else if (lane == 2) {     
-            y = 227;                // same if second lane
+            y = 309;                // same if second lane
             num = 2;
             speed = 110;
         } else if (lane == 3) {
-            y = 309;
+            y = 391;
             num = 3;                // third lane
             speed = 50;
         } else if (lane == 4){
-            y = 391;
+            y = 473;
             num = 2;                // fourth lane
             speed = 200;            
         }
@@ -171,14 +171,14 @@ function instantiateEnemy(){
 // function to instantiate Gems
 function instantiateGems(){
     gemColors = ["Blue", "Green", "Orange"];
-    var x = Math.floor((Math.random() * 705) + 1);
-    var y = [134,226,308,390];
+    var x = Math.floor((Math.random() * 640) + 20);         // generate random vale of x within canvas(20 and 640)
+    var y = [226,308,390,472];
     var gem = new Gems(x, y[Math.floor(Math.random()*y.length)], gemColors[Math.floor(Math.random()*gemColors.length)]);
     allGems.push(gem);
 }
 
 // create a new player instance of the class Player
-var player = new Player(315, 553);
+var player = new Player(315, 638);
 
 
 var newGame = function(){
