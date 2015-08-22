@@ -119,17 +119,26 @@ Gems.prototype.render = function(){
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 
-// Hearts class
-var Hearts = function(x,y){
-    this.sprite = "images/Heart.png";
+// Toprow class
+var Toprow = function(x,y,color){
     this.x = x;
     this.y = y;
     this.visible = true;
+    if (x < 349){
+         this.sprite = "images/Heart.png";       
+    }else if (x > 349 && y < 65){
+        this.sprite = "images/Gem "+color+"_small.png";
+    }
 }
 
-// Draws hearts on screen
-Hearts.prototype.render = function(){
+// Draws entities in toprow on screen
+Toprow.prototype.render = function(){
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);   
+    ctx.fillStyle = "White";
+    ctx.font = "30px Arial";
+    for (var key in gemsCollected){
+        ctx.fillText(gemsCollected[key][0], gemsCollected[key][1], gemsCollected[key][2]);
+    }
 }
 
 var Star = function(x,y){
@@ -181,19 +190,26 @@ function instantiateEnemy(){
 
 // function to instantiate Gems
 function instantiateGems(){
-    gemColors = ["Blue", "Green", "Orange"];
     var x = Math.floor((Math.random() * 640) + 20);         // generate random vale of x within canvas(20 and 640)
     var y = [226,308,390,472];
     var gem = new Gems(x, y[Math.floor(Math.random()*y.length)], gemColors[Math.floor(Math.random()*gemColors.length)]);
     allGems.push(gem);
 }
 
-function instantiateHearts(){
+//function to instantiate Toprow
+function instantiateTopRow(){
+     x = 450;
+    for (i = 0; i < gemColors.length; i++){
+        var gemSmall = new Toprow(x,60,gemColors[i]);
+        topRowEntities.push(gemSmall);
+        x+= 80;
+    }
+
     x = 10;
     for (i=0; i<lives; i++){
-        var heart = new Hearts(x, 50);
-        allHearts.push(heart);
-        x+= 50;
+        var heart = new Toprow(x, 60, "red");
+        topRowEntities.push(heart);
+        x+= 55;
     }
 }
 
@@ -203,18 +219,18 @@ var player = new Player(315, 635);
 
 var newGame = function(){
     time_elapsed = 0;       // initialize variables
-    lives = 3;
+    lives = 5;
     allEnemies = [];
     allGems = [];
-    allHearts = [];
+    topRowEntities = [];
+    gemColors = ["Blue", "Green", "Orange"];
     gemsCollected = {
-        blue: 0,
-        green: 0,
-        orange: 0
+        "Blue": [0,453,120],
+        "Green": [0,533,120],
+        "Orange": [0,613,120]
     };
-
     instantiateEnemy();     // calling instantiating function for enemies
-    instantiateHearts();
+    instantiateTopRow();
     instantiateGems();      // calling instantiating function for gems
 }
 

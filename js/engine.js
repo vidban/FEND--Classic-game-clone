@@ -118,7 +118,10 @@ var Engine = (function(global) {
            if (distance(player.x,player.y,enemy.x,enemy.y) < 78){       // if distance between bug and player is less than 78
                 player.x = 315;                                         // send player back to initial position
                 player.y = 553;
-                allHearts.pop();                                        // take away a life
+                if (lives > 0){                                         // if there are still lives left
+                    topRowEntities.pop();                               // take away a life                   
+                    lives -= 1;
+                }
                 return true;
            } else {
                 return false;
@@ -135,15 +138,16 @@ var Engine = (function(global) {
                 gem.x = -101;
                 switch (gem.color){
                     case "Blue":
-                        gemsCollected.blue+= 1;
+                        gemsCollected.Blue[0]+= 1;
                         break;
                     case "Green":
-                        gemsCollected.green+= 1;
+                        gemsCollected.Green[0]+= 1;
                         break;
                     case "Orange":
-                        gemsCollected.orange+= 1;
+                        gemsCollected.Orange[0]+= 1;
                         break;
                 }
+                console.log(gemsCollected);
             }
         });
      }
@@ -207,7 +211,7 @@ var Engine = (function(global) {
         allGems.forEach(function(gem){
             gem.render();
         });
-        allHearts.forEach(function(heart){
+        topRowEntities.forEach(function(heart){
            heart.render();
         });
 
@@ -237,7 +241,10 @@ var Engine = (function(global) {
         'images/Gem Blue.png',
         'images/Gem Green.png',
         'images/Gem Orange.png',
-        'images/Heart.png'
+        'images/Heart.png',
+        'images/Gem Blue_small.png',
+        'images/Gem Green_small.png',
+        'images/Gem Orange_small.png'
     ]);
     Resources.onReady(init);
 
