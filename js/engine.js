@@ -115,10 +115,10 @@ var Engine = (function(global) {
     // returns true if collision is there and false if not.
     function collision_Bugplayer(){
         allEnemies.forEach(function(enemy) {
-           if (distance(player.x,player.y,enemy.x,enemy.y) < 78){
-                player.x = 315;
+           if (distance(player.x,player.y,enemy.x,enemy.y) < 78){       // if distance between bug and player is less than 78
+                player.x = 315;                                         // send player back to initial position
                 player.y = 553;
-                lives -= 1;
+                allHearts.pop();                                        // take away a life
                 return true;
            } else {
                 return false;
@@ -207,6 +207,9 @@ var Engine = (function(global) {
         allGems.forEach(function(gem){
             gem.render();
         });
+        allHearts.forEach(function(heart){
+           heart.render();
+        });
 
         player.render();
     }
@@ -233,7 +236,8 @@ var Engine = (function(global) {
         'images/Star.png',
         'images/Gem Blue.png',
         'images/Gem Green.png',
-        'images/Gem Orange.png'
+        'images/Gem Orange.png',
+        'images/Heart.png'
     ]);
     Resources.onReady(init);
 

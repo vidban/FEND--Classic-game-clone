@@ -119,7 +119,18 @@ Gems.prototype.render = function(){
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 
+// Hearts class
+var Hearts = function(x,y){
+    this.sprite = "images/Heart.png";
+    this.x = x;
+    this.y = y;
+    this.visible = true;
+}
 
+// Draws hearts on screen
+Hearts.prototype.render = function(){
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);   
+}
 
 var Star = function(x,y){
     this.sprite = "images/Star.png";
@@ -177,8 +188,17 @@ function instantiateGems(){
     allGems.push(gem);
 }
 
+function instantiateHearts(){
+    x = 10;
+    for (i=0; i<lives; i++){
+        var heart = new Hearts(x, 50);
+        allHearts.push(heart);
+        x+= 50;
+    }
+}
+
 // create a new player instance of the class Player
-var player = new Player(315, 638);
+var player = new Player(315, 635);
 
 
 var newGame = function(){
@@ -186,6 +206,7 @@ var newGame = function(){
     lives = 3;
     allEnemies = [];
     allGems = [];
+    allHearts = [];
     gemsCollected = {
         blue: 0,
         green: 0,
@@ -193,6 +214,7 @@ var newGame = function(){
     };
 
     instantiateEnemy();     // calling instantiating function for enemies
+    instantiateHearts();
     instantiateGems();      // calling instantiating function for gems
 }
 
