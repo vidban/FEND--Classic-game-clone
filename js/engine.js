@@ -31,7 +31,7 @@ var Engine = (function(global) {
 
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
-     */080808
+     */
     function main() {
         /* Get our time delta information which is required if your game
          * requires smooth animation. Because everyone's computer processes
@@ -80,7 +80,7 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
+        checkCollisions();
     }
 
     /* This is called by the update function  and loops through all of the
@@ -94,8 +94,15 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
-        collisionCheck();       // check for collisions between bugs and player
+        allGems.forEach(function(gem){
+            gem.update();
+        });
         player.update();
+    }
+
+    function checkCollisions(){
+       collision_Bugplayer(); 
+       collision_Gemplayer();
     }
     
     // function to calculate distance between two objects
@@ -106,11 +113,12 @@ var Engine = (function(global) {
 
     // function to check for collision between player and bug
     // returns true if collision is there and false if not.
-    function collisionCheck(){
+    function collision_Bugplayer(){
         allEnemies.forEach(function(enemy) {
            if (distance(player.x,player.y,enemy.x,enemy.y) < 78){
                 player.x = 315;
                 player.y = 471;
+                lives -= 1;
                 return true;
            } else {
                 return false;
@@ -118,6 +126,27 @@ var Engine = (function(global) {
            }
         });
     }
+
+    // function to check for collision between player and gem
+    // moves the collided gem off canvas and increments its colorcounter by 1
+    function collision_Gemplayer(){
+        allGems.forEach(function(gem){
+            if (distance(player.x,player.y,gem.x,gem.y) < 70){
+                gem.x = -101;
+                switch (gem.color){
+                    case "Blue":
+                        gemsCollected.blue+= 1;
+                        break;
+                    case "Green":
+                        gemsCollected.green+= 1;
+                        break;
+                    case "Orange":
+                        gemsCollected.orange+= 1;
+                        break;
+                }
+            }
+        });
+     }
 
     /* This function initially draws the "game level", it will then call
      * the renderEntities function. Remember, this function is called every
@@ -174,6 +203,9 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.render();
         });
+        allGems.forEach(function(gem){
+            gem.render();
+        });
 
         player.render();
     }
@@ -196,7 +228,11 @@ var Engine = (function(global) {
         'images/grass-block.png',
         'images/enemy-bug1.png',
         'images/enemy-bug-left1.png',
-        'images/char-horn-girl1.png'
+        'images/char-horn-girl1.png',
+        'images/Star.png',
+        'images/Gem Blue.png',
+        'images/Gem Green.png',
+        'images/Gem Orange.png'
     ]);
     Resources.onReady(init);
 

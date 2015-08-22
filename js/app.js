@@ -1,15 +1,14 @@
-// Enemies our player must avoid
+
 // Enemy class
 var Enemy = function(x,y,speed) {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
     canvas_width = 705;
     canvas_height = 706;
     bug_width = 82;
     bug_height = 57;
 
     // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
+    // a helper to easily load images
+    
     if (y == 145 || y == 309){
         this.sprite = "images/enemy-bug-left1.png";         // Loads left facing bugs
     }else {
@@ -23,6 +22,7 @@ var Enemy = function(x,y,speed) {
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
+
 Enemy.prototype.update = function(dt) {
     // multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
@@ -93,9 +93,47 @@ Player.prototype.handleInput = function(keycode){
     }
 }
 
-// function to create ememy instances of class Enemy and add them to the array allEnemies
-function instantiateEnemies(){
-    allEnemies = [];
+//Gem class
+var Gems = function(x,y,color){
+    this.sprite = "images/Gem "+color+".png";
+    this.x = x;
+    this.y = y;
+    this.color = color;
+//    this.visible = true;
+}
+
+Gems.prototype.update = function(){
+    var count = 0;
+    for (g in allGems){                 // iterates through allGems
+        if (allGems[g].x < -5){         // and increments counter by 1
+            count+= 1;                  // everytime it sees that gem has been collided with
+        }                               // and has been moved off canvas
+    }
+    if (count == allGems.length){       // if all gems are off canvas
+        instantiateGems();              // generate another gem 
+    }
+}
+
+//Draws the gem on the screen
+Gems.prototype.render = function(){
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
+
+
+
+var Star = function(x,y){
+    this.sprite = "images/Star.png";
+    this.x = x;
+    this.y = y;
+    this.visible = true;
+
+}
+
+
+
+// function to instantiate Enemy
+function instantiateEnemy(){
+    //create ememy instances of class Enemy and add them to the array allEnemies
     var num;
 
     // assign number of bugs and their speed for each lane
@@ -127,15 +165,39 @@ function instantiateEnemies(){
             x += 303;                           // increment x position of the new object to be added by 303
         }
     }
+
+}
+
+// function to instantiate Gems
+function instantiateGems(){
+    gemColors = ["Blue", "Green", "Orange"];
+    var x = Math.floor((Math.random() * 705) + 1);
+    var y = [134,226,308,390];
+    var gem = new Gems(x, y[Math.floor(Math.random()*y.length)], gemColors[Math.floor(Math.random()*gemColors.length)]);
+    allGems.push(gem);
 }
 
 // create a new player instance of the class Player
 var player = new Player(315, 553);
 
-// calling instantiating function for enemies
-instantiateEnemies();
+
+var newGame = function(){
+    time_elapsed = 0;       // initialize variables
+    lives = 3;
+    allEnemies = [];
+    allGems = [];
+    gemsCollected = {
+        blue: 0,
+        green: 0,
+        orange: 0
+    };
+
+    instantiateEnemy();     // calling instantiating function for enemies
+    instantiateGems();      // calling instantiating function for gems
+}
 
 
+newGame();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. 
