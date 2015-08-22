@@ -90,6 +90,12 @@ Player.prototype.handleInput = function(keycode){
                 this.x = 615;       // it does not move more right, off canvas
             }
             break;
+        case "p":
+            gamePause = !gamePause;
+            break;
+        case "r":
+            newGame();
+            break;
     }
 }
 
@@ -218,6 +224,7 @@ var player = new Player(315, 635);
 
 
 var newGame = function(){
+    gamePause = false;
     time_elapsed = 0;       // initialize variables
     lives = 5;
     allEnemies = [];
@@ -244,7 +251,9 @@ document.addEventListener('keyup', function(e) {
         37: 'left',
         38: 'up',
         39: 'right',
-        40: 'down'
+        40: 'down',
+        80: 'p',
+        82: 'r'
     };
 
     player.handleInput(allowedKeys[e.keyCode]);
