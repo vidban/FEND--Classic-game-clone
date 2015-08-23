@@ -86,11 +86,13 @@ Player.prototype.render = function(){
 Player.prototype.handleInput = function(keycode){
     switch(keycode){
         case "up":
-            this.y -= 82;
-            if (this.y < 142){       // if player reaches top edge of canvas
-                this.y = 142;        // it does not move more up, off canvas
+            if(!gamePause){
+                this.y -= 82;
+                if (this.y < 142){       // if player reaches top edge of canvas
+                    this.y = 142;        // it does not move more up, off canvas
+                }
+                break;
             }
-            break;
         case "down":
             this.y += 82;
             if (this.y > 637){      // if player reaches bottom edge of canvas
