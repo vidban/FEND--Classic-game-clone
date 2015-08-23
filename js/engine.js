@@ -350,8 +350,12 @@ var Engine = (function(global) {
         ctx.strokeText("Your Score : "+ gemTotal, 170, 500);
 
         ctx.fillStyle = "Yellow";
-        ctx.fillText("Best Score : "+ bestScore, 170, 600);
-        ctx.strokeText("Best Score : "+ bestScore, 170, 600);       
+        ctx.fillText("Best Score : "+ bestScore, 170, 580);
+        ctx.strokeText("Best Score : "+ bestScore, 170, 580);  
+
+        ctx.font = "30px Orbitron";
+        ctx.fillStyle = "white";
+        ctx.fillText("Press 'R'  to restart the game", 120, 660);
     }
 
     // function that computes gradient to be used for splashscreen
