@@ -27,6 +27,7 @@ var Engine = (function(global) {
 
     canvas.width = 705;
     canvas.height = 706;
+    bestScore = 0;
     doc.body.appendChild(canvas);
 
     /* This function serves as the kickoff point for the game loop itself
@@ -122,9 +123,10 @@ var Engine = (function(global) {
                 if (lives > 1){                                         // if there are still lives left
                     topRowEntities.pop();                               // take away a life                   
                     lives -= 1;
-                    console.log(lives);
                 } else{
-                    newGame();
+                    gameEnded = true;
+                    endScreen();
+ //                   newGame();
                 }
                 return true;
            } else {
@@ -155,6 +157,7 @@ var Engine = (function(global) {
             }
         });
      }
+ 
 
     /* This function initially draws the "game level", it will then call
      * the renderEntities function. Remember, this function is called every
@@ -198,7 +201,9 @@ var Engine = (function(global) {
             }
             if (!gameStarted){
                 splashScreen();
-            }else{
+            }else if (gameEnded){
+                endScreen();
+            } else{
                 ctx.globalAlpha = 1;
                 renderEntities();
             }
@@ -293,13 +298,69 @@ var Engine = (function(global) {
         ctx.fillText("the game", 320, 575);
     }
 
+    function endScreen(){
+
+        // draw the screen
+        ctx.fillStyle = "green";    
+        ctx.globalAlpha = 0.8;          // sets transparency
+        ctx.fillRect(50,70,605,605);
+        ctx.strokeStyle = "Blue";
+        ctx.strokeRect(50,70,605,605);
+
+        //draw the total number of gems collected
+        ctx.lineJoin = "round";
+        ctx.lineWidth = 1;
+        ctx.fillStyle = "rgba(240, 240, 240, .3)";
+        ctx.fillRect(160, 140, 400, 65);
+        ctx.strokeRect(160, 140, 400, 65);
+        ctx.font = "40px Orbitron"
+        ctx.fillStyle= gradient;
+        ctx.fillText("Gems Collected", 180, 180);
+
+        var gems_score = [];
+        for (var key in gemsCollected){
+            gems_score.push(key);
+            gems_score.push(gemsCollected[key][0]);
+        }
+
+        ctx.fillStyle = "White";
+        var multiplier = 10;
+        var gemTotal = 0;
+        var gemPicX = 220;
+        var gemPicY = 230;
+        var gemX = 285;
+        var gemY = 270;
+        for (var i = 0; i< gems_score.length; i++){
+            ctx.drawImage(Resources.get("images/Gem "+gems_score[i]+".png"), gemPicX, gemPicY, 50, 50);
+            i++;
+            gemTotal += gems_score[i] * multiplier;
+            ctx.fillText(" X " + gems_score[i] + " = " + gems_score[i] * multiplier, gemX, gemY);
+            multiplier+= 10;
+            gemY+= 70;
+            gemPicY+= 70;
+        }
+        if (bestScore < gemTotal){
+            bestScore = gemTotal;
+        }
+
+        ctx.lineWidth = 1.1;
+        ctx.fillStyle = gradient;
+        ctx.strokeStyle = "blue";
+        ctx.fillText("Your Score : "+ gemTotal, 170, 500);
+        ctx.strokeText("Your Score : "+ gemTotal, 170, 500);
+
+        ctx.fillStyle = "Yellow";
+        ctx.fillText("Best Score : "+ bestScore, 170, 600);
+        ctx.strokeText("Best Score : "+ bestScore, 170, 600);       
+    }
+
     // function that computes gradient to be used for splashscreen
     function drawGradient(){
-        gradient = ctx.createLinearGradient(0,0,splash_width,splash_height);
-        gradient.addColorStop(0, "Magenta");
-        gradient.addColorStop(.25, "blue");
-        gradient.addColorStop(.5, "red");
-        gradient.addColorStop(.75, "white");
+        gradient = ctx.createLinearGradient(0,0,splash_width,0);
+        gradient.addColorStop(.20, "magenta");
+        gradient.addColorStop(.40, "blue");
+        gradient.addColorStop(.60, "red");
+        gradient.addColorStop(.80, "orange");
     }
 
     /* Go ahead and load all of the images we know we're going to need to

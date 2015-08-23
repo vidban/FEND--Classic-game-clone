@@ -2,6 +2,7 @@
 var newGame = function(){
     gamePause = false;          // initialize variables
     gameStarted = false
+    gameEnded = false;
     lives = 5;
     allEnemies = [];
     allGems = [];
