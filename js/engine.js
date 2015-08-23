@@ -45,8 +45,8 @@ var Engine = (function(global) {
         /* Call our update/render functions, pass along the time delta to
          * our update function since it may be used for smooth animation.
          */
-            update(dt);
-            render();            
+        update(dt);
+        render();
 
         /* Set our lastTime variable which is used to determine the time delta
          * for the next time this function is called.
@@ -62,9 +62,8 @@ var Engine = (function(global) {
     /* This function does some initial setup that should only occur once,
      * particularly setting the lastTime variable that is required for the
      * game loop.
-     */
+     */ 
     function init() {
-            reset();
             lastTime = Date.now();
             main();
     }
@@ -79,8 +78,10 @@ var Engine = (function(global) {
      * on the entities themselves within your app.js file).
      */
     function update(dt) {
-        updateEntities(dt);
-        checkCollisions();            
+        if (!gamePause){                // if game is not paused
+            updateEntities(dt);
+            checkCollisions();                       
+        }
     }
 
     /* This is called by the update function  and loops through all of the
@@ -162,7 +163,6 @@ var Engine = (function(global) {
         /* This array holds the relative URL to the image used
          * for that particular row of the game level.
          */
-        if (!gamePause){
             var rowImages = [
                     'images/water-block.png',   // Top row is water
                     'images/grass-block.png',   // Second row is water
@@ -193,10 +193,12 @@ var Engine = (function(global) {
                     ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
                 }
             }
-
-
-            renderEntities();
-        }
+            if (!gameStarted){
+                splashScreen();
+            }else{
+                ctx.globalAlpha = 1;
+                renderEntities();
+            }
     }
 
     /* This function is called by the render function and is called on each game
@@ -227,8 +229,17 @@ var Engine = (function(global) {
      * handle game reset states - maybe a new game menu or a game over screen
      * those sorts of things. It's only called once by the init() method.
      */
-    function reset() {
-        // noop
+
+    function splashScreen(){            // Draws a transparent info screen at the start of game
+        gameStarted = false;
+        gamePause = true;
+        splash_width = 605;
+        splash_height = 605;
+        ctx.fillStyle = "green";    
+        ctx.globalAlpha = 0.8;          // sets transparency
+        ctx.fillRect(50,70,605,605);
+        ctx.strokeStyle = "Blue";
+        ctx.strokeRect(50,70,605,605);
     }
 
     /* Go ahead and load all of the images we know we're going to need to
@@ -258,4 +269,11 @@ var Engine = (function(global) {
      * from within their app.js files.
      */
     global.ctx = ctx;
+
+    document.addEventListener("keyup",function(e){
+        if (e.keyCode === 32){
+            gameStarted = true;
+        }
+    });
+
 })(this);

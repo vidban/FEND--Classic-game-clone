@@ -1,3 +1,21 @@
+// function that starts a new game
+var newGame = function(){
+    gamePause = false;          // initialize variables
+    gameStarted = false
+    lives = 5;
+    allEnemies = [];
+    allGems = [];
+    topRowEntities = [];
+    gemColors = ["Blue", "Green", "Orange"];
+    gemsCollected = {
+        "Blue": [0,453,120],
+        "Green": [0,533,120],
+        "Orange": [0,613,120]
+    };
+    instantiateEnemy();     // calling instantiating function for enemies
+    instantiateTopRow();
+    instantiateGems();      // calling instantiating function for gems
+}
 
 // Enemy class
 var Enemy = function(x,y,speed) {
@@ -93,7 +111,9 @@ Player.prototype.handleInput = function(keycode){
         case "p":
             gamePause = !gamePause;
             break;
+        case "space":
         case "r":
+            gameStarted = true;
             newGame();
             break;
     }
@@ -222,27 +242,8 @@ function instantiateTopRow(){
 // create a new player instance of the class Player
 var player = new Player(315, 635);
 
-
-var newGame = function(){
-    gamePause = false;
-    time_elapsed = 0;       // initialize variables
-    lives = 5;
-    allEnemies = [];
-    allGems = [];
-    topRowEntities = [];
-    gemColors = ["Blue", "Green", "Orange"];
-    gemsCollected = {
-        "Blue": [0,453,120],
-        "Green": [0,533,120],
-        "Orange": [0,613,120]
-    };
-    instantiateEnemy();     // calling instantiating function for enemies
-    instantiateTopRow();
-    instantiateGems();      // calling instantiating function for gems
-}
-
-
 newGame();
+
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. 
@@ -253,8 +254,10 @@ document.addEventListener('keyup', function(e) {
         39: 'right',
         40: 'down',
         80: 'p',
-        82: 'r'
+        82: 'r',
+        32: 'space'
     };
 
     player.handleInput(allowedKeys[e.keyCode]);
+
 });
