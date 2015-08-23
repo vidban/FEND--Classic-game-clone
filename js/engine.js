@@ -119,9 +119,12 @@ var Engine = (function(global) {
            if (distance(player.x,player.y,enemy.x,enemy.y) < 78){       // if distance between bug and player is less than 78
                 player.x = 315;                                         // send player back to initial position
                 player.y = 553;
-                if (lives > 0){                                         // if there are still lives left
+                if (lives > 1){                                         // if there are still lives left
                     topRowEntities.pop();                               // take away a life                   
                     lives -= 1;
+                    console.log(lives);
+                } else{
+                    newGame();
                 }
                 return true;
            } else {
@@ -235,11 +238,68 @@ var Engine = (function(global) {
         gamePause = true;
         splash_width = 605;
         splash_height = 605;
+
+        // draw the screen
         ctx.fillStyle = "green";    
         ctx.globalAlpha = 0.8;          // sets transparency
         ctx.fillRect(50,70,605,605);
         ctx.strokeStyle = "Blue";
         ctx.strokeRect(50,70,605,605);
+
+        // draw the title
+        drawGradient();                 // use function to implement gradient
+        ctx.font = "80px Orbitron"
+        ctx.lineWidth = 2.0;
+        ctx.fillStyle = gradient;
+        ctx.strokeStyle = "Blue";
+        ctx.strokeText("Frogger",splash_width/3.5, splash_height/3.5);
+        ctx.fillText("Frogger",splash_width/3.5, splash_height/3.5);
+
+        controlsInstructions();
+
+        ctx.fillText("Press", 125, 660);
+        ctx.drawImage(Resources.get("images/space_bar.png"), 230, 630, 150, 30);
+        ctx.fillText("to continue....", 400, 660);
+
+    }
+
+    // control instrctions for splashscreen
+    function controlsInstructions(){
+        //draw the control heading
+        ctx.lineJoin = "round";
+        ctx.lineWidth = 1;
+        ctx.fillStyle = "rgba(240, 240, 240, .3)";
+        ctx.fillRect(225, 235, 250, 65);
+        ctx.strokeRect(225, 235, 250, 65);
+        ctx.font = "35px Orbitron"
+        ctx.fillStyle="White";
+        ctx.fillText("Controls", 265, 280);
+
+        // draw keys and instrctions
+        ctx.drawImage(Resources.get("images/arrow_keys.png"), 125, 320, 150, 100);
+        ctx.font = "25px Orbitron";
+        ctx.fillStyle = "white" ;
+        ctx.fillText("Use Arrow Keys", 320, 340);
+        ctx.fillText("to move the player", 320, 375);
+        ctx.fillText("across the screen", 320, 410);
+
+        //draw instrctions for pause
+        ctx.drawImage(Resources.get("images/p_key.png"), 175, 450, 50, 50);
+        ctx.fillText("Press 'P' to Pause", 320, 480);
+
+        //draw instructions for reset game
+        ctx.drawImage(Resources.get("images/R_key.png"), 175, 520, 50, 50);
+        ctx.fillText("Press 'R' to Reset", 320, 540);
+        ctx.fillText("the game", 320, 575);
+    }
+
+    // function that computes gradient to be used for splashscreen
+    function drawGradient(){
+        gradient = ctx.createLinearGradient(0,0,splash_width,splash_height);
+        gradient.addColorStop(0, "Magenta");
+        gradient.addColorStop(.25, "blue");
+        gradient.addColorStop(.5, "red");
+        gradient.addColorStop(.75, "white");
     }
 
     /* Go ahead and load all of the images we know we're going to need to
@@ -260,7 +320,11 @@ var Engine = (function(global) {
         'images/Heart.png',
         'images/Gem Blue_small.png',
         'images/Gem Green_small.png',
-        'images/Gem Orange_small.png'
+        'images/Gem Orange_small.png',
+        'images/arrow_keys.png',
+        'images/R_key.png',
+        'images/p_key.png',
+        'images/space_bar.png'
     ]);
     Resources.onReady(init);
 

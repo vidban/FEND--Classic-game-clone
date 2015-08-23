@@ -242,6 +242,7 @@ function instantiateTopRow(){
 // create a new player instance of the class Player
 var player = new Player(315, 635);
 
+
 newGame();
 
 
