@@ -1,6 +1,8 @@
 # Project- 3  Front-End Nano Degree- Udacity
 
 ***
+[Click here to play the game](http://vidban.github.io/FEND---Pr0ject-3---game-cl0ne)
+
 **Game Features:**
 Move the player across the screen, collecting gems and avoiding bugs. Player has 5 lives. Gems collected are shown on top right. Total score is provided at the end. 
 Player can reset the game at any time by pressing *"R"* and pause it any time by pressing *"P"*. Pressing *Space-Bar* starts the game.
@@ -25,8 +27,6 @@ Your best score is also shown. Play again and again to beat your own score!!
   - resorces.js
 - index.html
 - README.md
-
-**Game Link:**
 
 **Functionality Provided:**
 - Art assets and game engine- cloned from repository
