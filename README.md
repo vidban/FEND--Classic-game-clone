@@ -1,7 +1,7 @@
 # Project- 3  Front-End Nano Degree- Udacity
 
 ***
-**Game Link:** (http://vidban.github.io/FEND---Pr0ject-3---game-cl0ne)
+[Click here to play the game](http://vidban.github.io/FEND---Pr0ject-3---game-cl0ne)
 
 **Game Features:**
 Move the player across the screen, collecting gems and avoiding bugs. Player has 5 lives. Gems collected are shown on top right. Total score is provided at the end. 
