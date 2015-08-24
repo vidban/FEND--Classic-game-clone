@@ -112,11 +112,11 @@ Player.prototype.handleInput = function(keycode){
             }
             break;
         case "p":
-            gamePause = !gamePause;
+            gamePause = !gamePause; // toggles pause state
             break;
         case "space":
-        case "r":
-            gameStarted = true;
+        case "r":                   // if player presses space bar or the 'R' key
+            gameStarted = true;     // restart the game
             newGame();
             break;
     }
@@ -169,16 +169,6 @@ Toprow.prototype.render = function(){
         ctx.fillText(gemsCollected[key][0], gemsCollected[key][1], gemsCollected[key][2]);
     }
 }
-
-var Star = function(x,y){
-    this.sprite = "images/Star.png";
-    this.x = x;
-    this.y = y;
-    this.visible = true;
-
-}
-
-
 
 // function to instantiate Enemy
 function instantiateEnemy(){
@@ -245,7 +235,7 @@ function instantiateTopRow(){
 // create a new player instance of the class Player
 var player = new Player(315, 635);
 
-
+// start a new game
 newGame();
 
 

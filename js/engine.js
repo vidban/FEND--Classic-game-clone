@@ -298,6 +298,7 @@ var Engine = (function(global) {
         ctx.fillText("the game", 320, 575);
     }
 
+    // function to render score screen at the end of game
     function endScreen(){
 
         // draw the screen
@@ -307,7 +308,7 @@ var Engine = (function(global) {
         ctx.strokeStyle = "Blue";
         ctx.strokeRect(50,70,605,605);
 
-        //draw the total number of gems collected
+        //draw the title gems collected
         ctx.lineJoin = "round";
         ctx.lineWidth = 1;
         ctx.fillStyle = "rgba(240, 240, 240, .3)";
@@ -317,6 +318,7 @@ var Engine = (function(global) {
         ctx.fillStyle= gradient;
         ctx.fillText("Gems Collected", 180, 180);
 
+        // Adds color of gem and the number collected for each color to an array
         var gems_score = [];
         for (var key in gemsCollected){
             gems_score.push(key);
@@ -324,35 +326,40 @@ var Engine = (function(global) {
         }
 
         ctx.fillStyle = "White";
-        var multiplier = 10;
-        var gemTotal = 0;
+        var multiplier = 10;        // variable that holds points for a blue gem
+        var gemTotal = 0;       
         var gemPicX = 220;
         var gemPicY = 230;
         var gemX = 285;
         var gemY = 270;
         for (var i = 0; i< gems_score.length; i++){
+            //draws first gem image
             ctx.drawImage(Resources.get("images/Gem "+gems_score[i]+".png"), gemPicX, gemPicY, 50, 50);
             i++;
             gemTotal += gems_score[i] * multiplier;
+            //draws gems collected and the points total
             ctx.fillText(" X " + gems_score[i] + " = " + gems_score[i] * multiplier, gemX, gemY);
-            multiplier+= 10;
-            gemY+= 70;
-            gemPicY+= 70;
+            multiplier+= 10;        // increments multiplier for next gem which is worth 10 points more
+            gemY+= 70;              // increments y position of score rendering
+            gemPicY+= 70;           // increments y position of gem rendering
         }
-        if (bestScore < gemTotal){
+        if (bestScore < gemTotal){  // makes best score the current score if it is more
             bestScore = gemTotal;
         }
 
+        //draws the score
         ctx.lineWidth = 1.1;
         ctx.fillStyle = gradient;
         ctx.strokeStyle = "blue";
         ctx.fillText("Your Score : "+ gemTotal, 170, 500);
         ctx.strokeText("Your Score : "+ gemTotal, 170, 500);
 
+        // draws the best score
         ctx.fillStyle = "Yellow";
         ctx.fillText("Best Score : "+ bestScore, 170, 580);
         ctx.strokeText("Best Score : "+ bestScore, 170, 580);  
 
+        // draws instruction to start a new game
         ctx.font = "30px Orbitron";
         ctx.fillStyle = "white";
         ctx.fillText("Press 'R'  to restart the game", 120, 660);
