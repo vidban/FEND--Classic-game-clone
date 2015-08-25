@@ -72,12 +72,12 @@ var Player = function(x, y) {
     this.sprite = 'images/char-horn-girl1.png';
     this.x = x;
     this.y = y;
-    Enemy.call(this.sprite, x, y);
+    Enemy.call(this.sprite, x, y);      // Call the parent constructor
 };
 
 // Use inheritance to render player on the screen
-Player.prototype = Object.create(Enemy.prototype);
-Player.prototype.constructor = Player;
+Player.prototype = Object.create(Enemy.prototype);      // create a Player.prototype that inherits from Enemy.prototype
+Player.prototype.constructor = Player;                  // set the 'constructor' property to refer to Player
 
 /*
 // Draws the player on the screen
