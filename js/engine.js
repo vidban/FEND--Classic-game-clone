@@ -13,7 +13,6 @@
  * the canvas' context (ctx) object globally available to make writing app.js
  * a little simpler to work with.
  */
-
 var Engine = (function(global) {
     /* Predefine the variables we'll be using within this scope,
      * create the canvas element, grab the 2D context for that canvas
@@ -58,15 +57,15 @@ var Engine = (function(global) {
          * function again as soon as the browser is able to draw another frame.
          */
         win.requestAnimationFrame(main);
-    };
+    }
 
     /* This function does some initial setup that should only occur once,
      * particularly setting the lastTime variable that is required for the
      * game loop.
-     */ 
+     */
     function init() {
-            lastTime = Date.now();
-            main();
+        lastTime = Date.now();
+        main();
     }
 
     /* This function is called by main (our game loop) and itself calls all
@@ -79,9 +78,9 @@ var Engine = (function(global) {
      * on the entities themselves within your app.js file).
      */
     function update(dt) {
-        if (!gamePause){                // if game is not paused
+        if (!gamePause) { // if game is not paused
             updateEntities(dt);
-            checkCollisions();                       
+            checkCollisions();
         }
     }
 
@@ -96,68 +95,68 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
-        allGems.forEach(function(gem){
+        allGems.forEach(function(gem) {
             gem.update();
         });
         player.update();
     }
 
-    function checkCollisions(){
-       collision_Bugplayer(); 
-       collision_Gemplayer();
+    function checkCollisions() {
+        collision_Bugplayer();
+        collision_Gemplayer();
     }
-    
+
     // function to calculate distance between two objects
     // takes in x and y position of both objects as arguments
-    function distance(px,py,ex,ey){
-        return Math.sqrt((Math.pow(px - ex, 2)+Math.pow(py - ey,2)));
+    function distance(px, py, ex, ey) {
+        return Math.sqrt((Math.pow(px - ex, 2) + Math.pow(py - ey, 2)));
     }
 
     // function to check for collision between player and bug
     // returns true if collision is there and false if not.
-    function collision_Bugplayer(){
+    function collision_Bugplayer() {
         allEnemies.forEach(function(enemy) {
-           if (distance(player.x,player.y,enemy.x,enemy.y) < 78){       // if distance between bug and player is less than 78
-                player.x = 315;                                         // send player back to initial position
+            if (distance(player.x, player.y, enemy.x, enemy.y) < 78) { // if distance between bug and player is less than 78
+                player.x = 315; // send player back to initial position
                 player.y = 553;
-                if (lives > 1){                                         // if there are still lives left
-                    topRowEntities.pop();                               // take away a life                   
+                if (lives > 1) { // if there are still lives left
+                    topRowEntities.pop(); // take away a life                   
                     lives -= 1;
-                } else{
+                } else {
                     gameEnded = true;
                     endScreen();
- //                   newGame();
+                    //                   newGame();
                 }
                 return true;
-           } else {
+            } else {
                 return false;
 
-           }
+            }
         });
     }
 
     // function to check for collision between player and gem
     // moves the collided gem off canvas and increments its colorcounter by 1
-    function collision_Gemplayer(){
-        allGems.forEach(function(gem){
-            if (distance(player.x,player.y,gem.x,gem.y) < 70){
+    function collision_Gemplayer() {
+        allGems.forEach(function(gem) {
+            if (distance(player.x, player.y, gem.x, gem.y) < 70) {
                 gem.x = -101;
-                switch (gem.color){
+                switch (gem.color) {
                     case "Blue":
-                        gemsCollected.Blue[0]+= 1;
+                        gemsCollected.Blue[0] += 1;
                         break;
                     case "Green":
-                        gemsCollected.Green[0]+= 1;
+                        gemsCollected.Green[0] += 1;
                         break;
                     case "Orange":
-                        gemsCollected.Orange[0]+= 1;
+                        gemsCollected.Orange[0] += 1;
                         break;
                 }
                 console.log(gemsCollected);
             }
         });
-     }
- 
+    }
+
 
     /* This function initially draws the "game level", it will then call
      * the renderEntities function. Remember, this function is called every
@@ -169,44 +168,44 @@ var Engine = (function(global) {
         /* This array holds the relative URL to the image used
          * for that particular row of the game level.
          */
-            var rowImages = [
-                    'images/water-block.png',   // Top row is water
-                    'images/grass-block.png',   // Second row is water
-                    'images/stone-block.png',   // Row 1 of 4 of stone
-                    'images/stone-block.png',   // Row 2 of 4 of stone
-                    'images/stone-block.png',   // Row 3 of 4 of stone
-                    'images/stone-block.png',   // Row 4 of 4 of stone                
-                    'images/grass-block.png',   // Row 1 of 2 of grass
-                    'images/grass-block.png'    // Row 2 of 2 of grass
-                ],
-                numRows = 8,
-                numCols = 8,
-                row, col;
+        var rowImages = [
+                'images/water-block.png', // Top row is water
+                'images/grass-block.png', // Second row is water
+                'images/stone-block.png', // Row 1 of 4 of stone
+                'images/stone-block.png', // Row 2 of 4 of stone
+                'images/stone-block.png', // Row 3 of 4 of stone
+                'images/stone-block.png', // Row 4 of 4 of stone                
+                'images/grass-block.png', // Row 1 of 2 of grass
+                'images/grass-block.png' // Row 2 of 2 of grass
+            ],
+            numRows = 8,
+            numCols = 8,
+            row, col;
 
-            /* Loop through the number of rows and columns we've defined above
-             * and, using the rowImages array, draw the correct image for that
-             * portion of the "grid"
-             */
-            for (row = 0; row < numRows; row++) {
-                for (col = 0; col < numCols; col++) {
-                    /* The drawImage function of the canvas' context element
-                     * requires 3 parameters: the image to draw, the x coordinate
-                     * to start drawing and the y coordinate to start drawing.
-                     * We're using our Resources helpers to refer to our images
-                     * so that we get the benefits of caching these images, since
-                     * we're using the08m over and over.
-                     */
-                    ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
-                }
+        /* Loop through the number of rows and columns we've defined above
+         * and, using the rowImages array, draw the correct image for that
+         * portion of the "grid"
+         */
+        for (row = 0; row < numRows; row++) {
+            for (col = 0; col < numCols; col++) {
+                /* The drawImage function of the canvas' context element
+                 * requires 3 parameters: the image to draw, the x coordinate
+                 * to start drawing and the y coordinate to start drawing.
+                 * We're using our Resources helpers to refer to our images
+                 * so that we get the benefits of caching these images, since
+                 * we're using the08m over and over.
+                 */
+                ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
             }
-            if (!gameStarted){
-                splashScreen();
-            }else if (gameEnded){
-                endScreen();
-            } else{
-                ctx.globalAlpha = 1;
-                renderEntities();
-            }
+        }
+        if (!gameStarted) {
+            splashScreen();
+        } else if (gameEnded) {
+            endScreen();
+        } else {
+            ctx.globalAlpha = 1;
+            renderEntities();
+        }
     }
 
     /* This function is called by the render function and is called on each game
@@ -219,15 +218,15 @@ var Engine = (function(global) {
         /* Loop through all of the objects within the allEnemies array and call
          * the render function you have defined.
          */
-    
+
         allEnemies.forEach(function(enemy) {
             enemy.render();
         });
-        allGems.forEach(function(gem){
+        allGems.forEach(function(gem) {
             gem.render();
         });
-        topRowEntities.forEach(function(heart){
-           heart.render();
+        topRowEntities.forEach(function(heart) {
+            heart.render();
         });
 
         player.render();
@@ -238,27 +237,27 @@ var Engine = (function(global) {
      * those sorts of things. It's only called once by the init() method.
      */
 
-    function splashScreen(){            // Draws a transparent info screen at the start of game
+    function splashScreen() { // Draws a transparent info screen at the start of game
         gameStarted = false;
         gamePause = true;
         splash_width = 605;
         splash_height = 605;
 
         // draw the screen
-        ctx.fillStyle = "green";    
-        ctx.globalAlpha = 0.8;          // sets transparency
-        ctx.fillRect(50,70,605,605);
+        ctx.fillStyle = "green";
+        ctx.globalAlpha = 0.8; // sets transparency
+        ctx.fillRect(50, 70, 605, 605);
         ctx.strokeStyle = "Blue";
-        ctx.strokeRect(50,70,605,605);
+        ctx.strokeRect(50, 70, 605, 605);
 
         // draw the title
-        drawGradient();                 // use function to implement gradient
-        ctx.font = "80px Orbitron"
+        drawGradient(); // use function to implement gradient
+        ctx.font = "80px Orbitron";
         ctx.lineWidth = 2.0;
         ctx.fillStyle = gradient;
         ctx.strokeStyle = "Blue";
-        ctx.strokeText("Frogger",splash_width/3.5, splash_height/3.5);
-        ctx.fillText("Frogger",splash_width/3.5, splash_height/3.5);
+        ctx.strokeText("Frogger", splash_width / 3.5, splash_height / 3.5);
+        ctx.fillText("Frogger", splash_width / 3.5, splash_height / 3.5);
 
         controlsInstructions();
 
@@ -269,21 +268,21 @@ var Engine = (function(global) {
     }
 
     // control instrctions for splashscreen
-    function controlsInstructions(){
+    function controlsInstructions() {
         //draw the control heading
         ctx.lineJoin = "round";
         ctx.lineWidth = 1;
         ctx.fillStyle = "rgba(240, 240, 240, .3)";
         ctx.fillRect(225, 235, 250, 65);
         ctx.strokeRect(225, 235, 250, 65);
-        ctx.font = "35px Orbitron"
-        ctx.fillStyle="White";
+        ctx.font = "35px Orbitron";
+        ctx.fillStyle = "White";
         ctx.fillText("Controls", 265, 280);
 
         // draw keys and instrctions
         ctx.drawImage(Resources.get("images/arrow_keys.png"), 125, 320, 150, 100);
         ctx.font = "25px Orbitron";
-        ctx.fillStyle = "white" ;
+        ctx.fillStyle = "white";
         ctx.fillText("Use Arrow Keys", 320, 340);
         ctx.fillText("to move the player", 320, 375);
         ctx.fillText("across the screen", 320, 410);
@@ -299,14 +298,14 @@ var Engine = (function(global) {
     }
 
     // function to render score screen at the end of game
-    function endScreen(){
+    function endScreen() {
 
         // draw the screen
-        ctx.fillStyle = "green";    
-        ctx.globalAlpha = 0.8;          // sets transparency
-        ctx.fillRect(50,70,605,605);
+        ctx.fillStyle = "green";
+        ctx.globalAlpha = 0.8; // sets transparency
+        ctx.fillRect(50, 70, 605, 605);
         ctx.strokeStyle = "Blue";
-        ctx.strokeRect(50,70,605,605);
+        ctx.strokeRect(50, 70, 605, 605);
 
         //draw the title gems collected
         ctx.lineJoin = "round";
@@ -314,36 +313,36 @@ var Engine = (function(global) {
         ctx.fillStyle = "rgba(240, 240, 240, .3)";
         ctx.fillRect(160, 140, 400, 65);
         ctx.strokeRect(160, 140, 400, 65);
-        ctx.font = "40px Orbitron"
-        ctx.fillStyle= gradient;
+        ctx.font = "40px Orbitron";
+        ctx.fillStyle = gradient;
         ctx.fillText("Gems Collected", 180, 180);
 
         // Adds color of gem and the number collected for each color to an array
         var gems_score = [];
-        for (var key in gemsCollected){
+        for (var key in gemsCollected) {
             gems_score.push(key);
             gems_score.push(gemsCollected[key][0]);
         }
 
         ctx.fillStyle = "White";
-        var multiplier = 10;        // variable that holds points for a blue gem
-        var gemTotal = 0;       
+        var multiplier = 10; // variable that holds points for a blue gem
+        var gemTotal = 0;
         var gemPicX = 220;
         var gemPicY = 230;
         var gemX = 285;
         var gemY = 270;
-        for (var i = 0; i< gems_score.length; i++){
+        for (var i = 0; i < gems_score.length; i++) {
             //draws first gem image
-            ctx.drawImage(Resources.get("images/Gem "+gems_score[i]+".png"), gemPicX, gemPicY, 50, 50);
+            ctx.drawImage(Resources.get("images/Gem " + gems_score[i] + ".png"), gemPicX, gemPicY, 50, 50);
             i++;
             gemTotal += gems_score[i] * multiplier;
             //draws gems collected and the points total
             ctx.fillText(" X " + gems_score[i] + " = " + gems_score[i] * multiplier, gemX, gemY);
-            multiplier+= 10;        // increments multiplier for next gem which is worth 10 points more
-            gemY+= 70;              // increments y position of score rendering
-            gemPicY+= 70;           // increments y position of gem rendering
+            multiplier += 10; // increments multiplier for next gem which is worth 10 points more
+            gemY += 70; // increments y position of score rendering
+            gemPicY += 70; // increments y position of gem rendering
         }
-        if (bestScore < gemTotal){  // makes best score the current score if it is more
+        if (bestScore < gemTotal) { // makes best score the current score if it is more
             bestScore = gemTotal;
         }
 
@@ -351,13 +350,13 @@ var Engine = (function(global) {
         ctx.lineWidth = 1.1;
         ctx.fillStyle = gradient;
         ctx.strokeStyle = "blue";
-        ctx.fillText("Your Score : "+ gemTotal, 170, 500);
-        ctx.strokeText("Your Score : "+ gemTotal, 170, 500);
+        ctx.fillText("Your Score : " + gemTotal, 170, 500);
+        ctx.strokeText("Your Score : " + gemTotal, 170, 500);
 
         // draws the best score
         ctx.fillStyle = "Yellow";
-        ctx.fillText("Best Score : "+ bestScore, 170, 580);
-        ctx.strokeText("Best Score : "+ bestScore, 170, 580);  
+        ctx.fillText("Best Score : " + bestScore, 170, 580);
+        ctx.strokeText("Best Score : " + bestScore, 170, 580);
 
         // draws instruction to start a new game
         ctx.font = "30px Orbitron";
@@ -366,12 +365,12 @@ var Engine = (function(global) {
     }
 
     // function that computes gradient to be used for splashscreen
-    function drawGradient(){
-        gradient = ctx.createLinearGradient(0,0,splash_width,0);
-        gradient.addColorStop(.20, "magenta");
-        gradient.addColorStop(.40, "blue");
-        gradient.addColorStop(.60, "red");
-        gradient.addColorStop(.80, "orange");
+    function drawGradient() {
+        gradient = ctx.createLinearGradient(0, 0, splash_width, 0);
+        gradient.addColorStop(0.20, "magenta");
+        gradient.addColorStop(0.40, "blue");
+        gradient.addColorStop(0.60, "red");
+        gradient.addColorStop(0.80, "orange");
     }
 
     /* Go ahead and load all of the images we know we're going to need to
@@ -406,8 +405,8 @@ var Engine = (function(global) {
      */
     global.ctx = ctx;
 
-    document.addEventListener("keyup",function(e){
-        if (e.keyCode === 32){
+    document.addEventListener("keyup", function(e) {
+        if (e.keyCode === 32) {
             gameStarted = true;
         }
     });
