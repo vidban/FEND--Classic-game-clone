@@ -235,6 +235,7 @@ var Engine = (function(global) {
      * handle game reset states - maybe a new game menu or a game over screen
      * those sorts of things. It's only called once by the init() method.
      */
+// TODO: implement screen to show reset of game on touching water
 
     function splashScreen() { // Draws a transparent info screen at the start of game
         gameStarted = false;

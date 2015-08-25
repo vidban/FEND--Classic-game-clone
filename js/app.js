@@ -92,7 +92,8 @@ Player.prototype.handleInput = function(keycode) {
             if (!gamePause) {
                 this.y -= 82;
                 if (this.y < 142) { // if player reaches top edge of canvas
-                    this.y = 142; // it does not move more up, off canvas
+                    newGame();      // Resets the game if the player touches water
+ //                   this.y = 142; // it does not move more up, off canvas
                 }
             }
             break;
