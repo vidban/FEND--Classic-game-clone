@@ -4,7 +4,9 @@
 [Click here to play the game](http://vidban.github.io/FEND---Pr0ject-3---game-cl0ne)
 
 **Game Features:**
-Move the player across the screen, collecting gems and avoiding bugs. Player has 5 lives. Gems collected are shown on top right. Total score is provided at the end. 
+Move the player across the screen, collecting gems and avoiding bugs. Player has 5 lives. Gems collected are shown on top right. 
+**Don't touch the water or the game is reset!!**
+Total score is provided at the end. 
 Player can reset the game at any time by pressing *"R"* and pause it any time by pressing *"P"*. Pressing *Space-Bar* starts the game.
 Your best score is also shown. Play again and again to beat your own score!!
 
