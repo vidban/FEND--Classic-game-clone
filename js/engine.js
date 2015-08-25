@@ -98,7 +98,6 @@ var Engine = (function(global) {
         allGems.forEach(function(gem) {
             gem.update();
         });
-        player.update();
     }
 
     function checkCollisions() {
@@ -142,13 +141,13 @@ var Engine = (function(global) {
             if (distance(player.x, player.y, gem.x, gem.y) < 70) {
                 gem.x = -101;
                 switch (gem.color) {
-                    case "Blue":
+                    case 'Blue':
                         gemsCollected.Blue[0] += 1;
                         break;
-                    case "Green":
+                    case 'Green':
                         gemsCollected.Green[0] += 1;
                         break;
-                    case "Orange":
+                    case 'Orange':
                         gemsCollected.Orange[0] += 1;
                         break;
                 }
@@ -158,7 +157,7 @@ var Engine = (function(global) {
     }
 
 
-    /* This function initially draws the "game level", it will then call
+    /* This function initially draws the 'game level', it will then call
      * the renderEntities function. Remember, this function is called every
      * game tick (or loop of the game engine) because that's how games work -
      * they are flipbooks creating the illusion of animation but in reality
@@ -184,7 +183,7 @@ var Engine = (function(global) {
 
         /* Loop through the number of rows and columns we've defined above
          * and, using the rowImages array, draw the correct image for that
-         * portion of the "grid"
+         * portion of the 'grid'
          */
         for (row = 0; row < numRows; row++) {
             for (col = 0; col < numCols; col++) {
@@ -244,78 +243,78 @@ var Engine = (function(global) {
         splash_height = 605;
 
         // draw the screen
-        ctx.fillStyle = "green";
+        ctx.fillStyle = 'green';
         ctx.globalAlpha = 0.8; // sets transparency
         ctx.fillRect(50, 70, 605, 605);
-        ctx.strokeStyle = "Blue";
+        ctx.strokeStyle = 'Blue';
         ctx.strokeRect(50, 70, 605, 605);
 
         // draw the title
         drawGradient(); // use function to implement gradient
-        ctx.font = "80px Orbitron";
+        ctx.font = '80px Orbitron';
         ctx.lineWidth = 2.0;
         ctx.fillStyle = gradient;
-        ctx.strokeStyle = "Blue";
-        ctx.strokeText("Frogger", splash_width / 3.5, splash_height / 3.5);
-        ctx.fillText("Frogger", splash_width / 3.5, splash_height / 3.5);
+        ctx.strokeStyle = 'Blue';
+        ctx.strokeText('Frogger', splash_width / 3.5, splash_height / 3.5);
+        ctx.fillText('Frogger', splash_width / 3.5, splash_height / 3.5);
 
         controlsInstructions();
 
-        ctx.fillText("Press", 125, 660);
-        ctx.drawImage(Resources.get("images/space_bar.png"), 230, 630, 150, 30);
-        ctx.fillText("to continue....", 400, 660);
+        ctx.fillText('Press', 125, 660);
+        ctx.drawImage(Resources.get('images/space_bar.png'), 230, 630, 150, 30);
+        ctx.fillText('to continue....', 400, 660);
 
     }
 
     // control instrctions for splashscreen
     function controlsInstructions() {
         //draw the control heading
-        ctx.lineJoin = "round";
+        ctx.lineJoin = 'round';
         ctx.lineWidth = 1;
-        ctx.fillStyle = "rgba(240, 240, 240, .3)";
+        ctx.fillStyle = 'rgba(240, 240, 240, .3)';
         ctx.fillRect(225, 235, 250, 65);
         ctx.strokeRect(225, 235, 250, 65);
-        ctx.font = "35px Orbitron";
-        ctx.fillStyle = "White";
-        ctx.fillText("Controls", 265, 280);
+        ctx.font = '35px Orbitron';
+        ctx.fillStyle = 'White';
+        ctx.fillText('Controls', 265, 280);
 
         // draw keys and instrctions
-        ctx.drawImage(Resources.get("images/arrow_keys.png"), 125, 320, 150, 100);
-        ctx.font = "25px Orbitron";
-        ctx.fillStyle = "white";
-        ctx.fillText("Use Arrow Keys", 320, 340);
-        ctx.fillText("to move the player", 320, 375);
-        ctx.fillText("across the screen", 320, 410);
+        ctx.drawImage(Resources.get('images/arrow_keys.png'), 125, 320, 150, 100);
+        ctx.font = '25px Orbitron';
+        ctx.fillStyle = 'white';
+        ctx.fillText('Use Arrow Keys', 320, 340);
+        ctx.fillText('to move the player', 320, 375);
+        ctx.fillText('across the screen', 320, 410);
 
         //draw instrctions for pause
-        ctx.drawImage(Resources.get("images/p_key.png"), 175, 450, 50, 50);
-        ctx.fillText("Press 'P' to Pause", 320, 480);
+        ctx.drawImage(Resources.get('images/p_key.png'), 175, 450, 50, 50);
+        ctx.fillText('Press "P" to Pause', 320, 480);
 
         //draw instructions for reset game
-        ctx.drawImage(Resources.get("images/R_key.png"), 175, 520, 50, 50);
-        ctx.fillText("Press 'R' to Reset", 320, 540);
-        ctx.fillText("the game", 320, 575);
+        ctx.drawImage(Resources.get('images/R_key.png'), 175, 520, 50, 50);
+        ctx.fillText('Press "R" to Reset', 320, 540);
+        ctx.fillText('the game', 320, 575);
     }
 
     // function to render score screen at the end of game
     function endScreen() {
 
         // draw the screen
-        ctx.fillStyle = "green";
+        ctx.fillStyle = 'green';
         ctx.globalAlpha = 0.8; // sets transparency
         ctx.fillRect(50, 70, 605, 605);
-        ctx.strokeStyle = "Blue";
+        ctx.strokeStyle = 'Blue';
         ctx.strokeRect(50, 70, 605, 605);
 
         //draw the title gems collected
-        ctx.lineJoin = "round";
+        ctx.lineJoin = 'round';
         ctx.lineWidth = 1;
-        ctx.fillStyle = "rgba(240, 240, 240, .3)";
+        ctx.fillStyle = 'rgba(240, 240, 240, .3)';
         ctx.fillRect(160, 140, 400, 65);
         ctx.strokeRect(160, 140, 400, 65);
-        ctx.font = "40px Orbitron";
+        ctx.font = '40px Orbitron';
         ctx.fillStyle = gradient;
-        ctx.fillText("Gems Collected", 180, 180);
+        ctx.fillText('Gems Collected', 180, 180);
 
         // Adds color of gem and the number collected for each color to an array
         var gems_score = [];
@@ -324,7 +323,7 @@ var Engine = (function(global) {
             gems_score.push(gemsCollected[key][0]);
         }
 
-        ctx.fillStyle = "White";
+        ctx.fillStyle = 'White';
         var multiplier = 10; // variable that holds points for a blue gem
         var gemTotal = 0;
         var gemPicX = 220;
@@ -333,11 +332,11 @@ var Engine = (function(global) {
         var gemY = 270;
         for (var i = 0; i < gems_score.length; i++) {
             //draws first gem image
-            ctx.drawImage(Resources.get("images/Gem " + gems_score[i] + ".png"), gemPicX, gemPicY, 50, 50);
+            ctx.drawImage(Resources.get('images/Gem ' + gems_score[i] + '.png'), gemPicX, gemPicY, 50, 50);
             i++;
             gemTotal += gems_score[i] * multiplier;
             //draws gems collected and the points total
-            ctx.fillText(" X " + gems_score[i] + " = " + gems_score[i] * multiplier, gemX, gemY);
+            ctx.fillText(' X ' + gems_score[i] + ' = ' + gems_score[i] * multiplier, gemX, gemY);
             multiplier += 10; // increments multiplier for next gem which is worth 10 points more
             gemY += 70; // increments y position of score rendering
             gemPicY += 70; // increments y position of gem rendering
@@ -349,28 +348,28 @@ var Engine = (function(global) {
         //draws the score
         ctx.lineWidth = 1.1;
         ctx.fillStyle = gradient;
-        ctx.strokeStyle = "blue";
-        ctx.fillText("Your Score : " + gemTotal, 170, 500);
-        ctx.strokeText("Your Score : " + gemTotal, 170, 500);
+        ctx.strokeStyle = 'blue';
+        ctx.fillText('Your Score : ' + gemTotal, 170, 500);
+        ctx.strokeText('Your Score : ' + gemTotal, 170, 500);
 
         // draws the best score
-        ctx.fillStyle = "Yellow";
-        ctx.fillText("Best Score : " + bestScore, 170, 580);
-        ctx.strokeText("Best Score : " + bestScore, 170, 580);
+        ctx.fillStyle = 'Yellow';
+        ctx.fillText('Best Score : ' + bestScore, 170, 580);
+        ctx.strokeText('Best Score : ' + bestScore, 170, 580);
 
         // draws instruction to start a new game
-        ctx.font = "30px Orbitron";
-        ctx.fillStyle = "white";
-        ctx.fillText("Press 'R'  to restart the game", 120, 660);
+        ctx.font = '30px Orbitron';
+        ctx.fillStyle = 'white';
+        ctx.fillText('Press "R"  to restart the game', 120, 660);
     }
 
     // function that computes gradient to be used for splashscreen
     function drawGradient() {
         gradient = ctx.createLinearGradient(0, 0, splash_width, 0);
-        gradient.addColorStop(0.20, "magenta");
-        gradient.addColorStop(0.40, "blue");
-        gradient.addColorStop(0.60, "red");
-        gradient.addColorStop(0.80, "orange");
+        gradient.addColorStop(0.20, 'magenta');
+        gradient.addColorStop(0.40, 'blue');
+        gradient.addColorStop(0.60, 'red');
+        gradient.addColorStop(0.80, 'orange');
     }
 
     /* Go ahead and load all of the images we know we're going to need to
@@ -405,7 +404,7 @@ var Engine = (function(global) {
      */
     global.ctx = ctx;
 
-    document.addEventListener("keyup", function(e) {
+    document.addEventListener('keyup', function(e) {
         if (e.keyCode === 32) {
             gameStarted = true;
         }

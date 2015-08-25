@@ -1,3 +1,4 @@
+
 // function that starts a new game
 var newGame = function() {
     gamePause = false; // initialize variables
@@ -7,11 +8,11 @@ var newGame = function() {
     allEnemies = [];
     allGems = [];
     topRowEntities = [];
-    gemColors = ["Blue", "Green", "Orange"];
+    gemColors = ['Blue', 'Green', 'Orange'];
     gemsCollected = {
-        "Blue": [0, 453, 120],
-        "Green": [0, 533, 120],
-        "Orange": [0, 613, 120]
+        'Blue': [0, 453, 120],
+        'Green': [0, 533, 120],
+        'Orange': [0, 613, 120]
     };
     instantiateEnemy(); // calling instantiating function for enemies
     instantiateTopRow();
@@ -29,7 +30,7 @@ var Enemy = function(x, y, speed) {
     // a helper to easily load images
 
     if (y == 145 || y == 309) {
-        this.sprite = "images/enemy-bug-left1.png"; // Loads left facing bugs
+        this.sprite = 'images/enemy-bug-left1.png'; // Loads left facing bugs
     } else {
         this.sprite = 'images/enemy-bug1.png'; // Loads right facing bugs
 
@@ -68,24 +69,26 @@ Enemy.prototype.render = function() {
 
 // Player class
 var Player = function(x, y) {
-    this.sprite = "images/char-horn-girl1.png";
+    this.sprite = 'images/char-horn-girl1.png';
     this.x = x;
     this.y = y;
+    Enemy.call(this.sprite, x, y);
 };
 
-Player.prototype.update = function() {
+// Use inheritance to render player on the screen
+Player.prototype = Object.create(Enemy.prototype);
+Player.prototype.constructor = Player;
 
-};
-
+/*
 // Draws the player on the screen
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
-
+*/
 // Method that handles key input and moves player accordingly
 Player.prototype.handleInput = function(keycode) {
     switch (keycode) {
-        case "up":
+        case 'up':
             if (!gamePause) {
                 this.y -= 82;
                 if (this.y < 142) { // if player reaches top edge of canvas
@@ -93,29 +96,29 @@ Player.prototype.handleInput = function(keycode) {
                 }
             }
             break;
-        case "down":
+        case 'down':
             this.y += 82;
             if (this.y > 637) { // if player reaches bottom edge of canvas
                 this.y = 637; // it does not move more down, off canvas
             }
             break;
-        case "left":
+        case 'left':
             this.x -= 75;
             if (this.x < 15) { // if player reaches left edge of canvas
                 this.x = 15; // it does not move more left, off canvas
             }
             break;
-        case "right":
+        case 'right':
             this.x += 75;
             if (this.x > 615) { // if player reaches right edge of canvas
                 this.x = 615; // it does not move more right, off canvas
             }
             break;
-        case "p":
+        case 'p':
             gamePause = !gamePause; // toggles pause state
             break;
-        case "space":
-        case "r": // if player presses space bar or the 'R' key
+        case 'space':
+        case 'r': // if player presses space bar or the 'R' key
             gameStarted = true; // restart the game
             newGame();
             break;
@@ -124,11 +127,10 @@ Player.prototype.handleInput = function(keycode) {
 
 //Gem class
 var Gems = function(x, y, color) {
-    this.sprite = "images/Gem " + color + ".png";
+    this.sprite = 'images/Gem ' + color + '.png';
     this.x = x;
     this.y = y;
     this.color = color;
-    //    this.visible = true;
 };
 
 Gems.prototype.update = function() {
@@ -143,6 +145,7 @@ Gems.prototype.update = function() {
     }
 };
 
+
 //Draws the gem on the screen
 Gems.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -154,17 +157,17 @@ var Toprow = function(x, y, color) {
     this.y = y;
     this.visible = true;
     if (x < 349) {
-        this.sprite = "images/Heart.png";
+        this.sprite = 'images/Heart.png';
     } else if (x > 349 && y < 65) {
-        this.sprite = "images/Gem " + color + "_small.png";
+        this.sprite = 'images/Gem ' + color + '_small.png';
     }
 };
 
 // Draws entities in toprow on screen
 Toprow.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-    ctx.fillStyle = "White";
-    ctx.font = "30px Arial";
+    ctx.fillStyle = 'White';
+    ctx.font = '30px Arial';
     for (var key in gemsCollected) {
         ctx.fillText(gemsCollected[key][0], gemsCollected[key][1], gemsCollected[key][2]);
     }
@@ -218,7 +221,8 @@ function instantiateGems() {
 //function to instantiate Toprow
 function instantiateTopRow() {
     x = 450;
-    for (i = 0; i < gemColors.length; i++) {
+    var len = gemColors.length;
+    for (i = 0; i < len; i++) {
         var gemSmall = new Toprow(x, 60, gemColors[i]);
         topRowEntities.push(gemSmall);
         x += 80;
@@ -226,7 +230,7 @@ function instantiateTopRow() {
 
     x = 10;
     for (i = 0; i < lives; i++) {
-        var heart = new Toprow(x, 60, "red");
+        var heart = new Toprow(x, 60, 'red');
         topRowEntities.push(heart);
         x += 55;
     }
