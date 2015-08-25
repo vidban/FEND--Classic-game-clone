@@ -14,6 +14,7 @@ var newGame = function() {
         'Green': [0, 533, 120],
         'Orange': [0, 613, 120]
     };
+    player.resetPosition();
     instantiateEnemy(); // calling instantiating function for enemies
     instantiateTopRow();
     instantiateGems(); // calling instantiating function for gems
@@ -85,6 +86,11 @@ Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 */
+
+Player.prototype.resetPosition = function() {
+    this.x = 315;
+    this.y = 553;
+};
 // Method that handles key input and moves player accordingly
 Player.prototype.handleInput = function(keycode) {
     switch (keycode) {
@@ -92,8 +98,6 @@ Player.prototype.handleInput = function(keycode) {
             if (!gamePause) {
                 this.y -= 82;
                 if (this.y < 142) { // if player reaches top edge of canvas
-                    player.x = 315; // send player back to initial position
-                    player.y = 553;
                     newGame();      // Resets the game if the player touches water
  //                   this.y = 142; // it does not move more up, off canvas
                 }
