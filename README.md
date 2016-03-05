@@ -44,6 +44,8 @@ Your best score is also shown. Play again and again to beat your own score!!
 
 **Future Modifications**
 - implement a LeaderBoard to keep track of top 10 scores
+- Add choice of players
+- Add a story line
 
 
 
